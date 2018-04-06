@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>쌍용교육센터</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script> 
+$(document).ready(function(){
+	
+	$("input#myTxt").on("keyup", function(){
+		var temp = $(this).val();
+		if(temp.length == 0){
+			$("span#txtHint").text("");
+		}else{
+			//동기, 비동기 방식 구분을 위해선 $.ajax 메서드 방식으로만 코딩해야 한다. async 인자를 true로 선언하면, 동기식.
+			$.ajax({
+				url:"gethint.jsp",
+				data:{
+					query:temp
+				},
+				success:function(data){
+					$("span#txtHint").text(data);				
+				},
+				async:false
+			});
+		}
+	});
+	
+});
+</script>
+
+</head>
+<body>
+	<div class="container">
+		<h1>jQuery Ajax Test</h1>
+		<p>
+			<b>Start typing a name in the input field below:</b>
+		</p>
+		<form>
+			First name: <input type="text" id="myTxt">
+		</form>
+		<p>
+			Suggestions: <span id="txtHint"></span>
+		</p>
+	</div>
+</body>
+</html>
